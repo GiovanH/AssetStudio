@@ -135,7 +135,7 @@ namespace AssetStudioGUI
                 {
                     var assetItem = new AssetItem(asset);
                     objectAssetItemDic.Add(asset, assetItem);
-                    assetItem.UniqueID = " #" + asset.assetsFile.fileName + "." + asset.m_PathID;
+                    assetItem.UniqueID = " #" + asset.m_PathID;
                     var exportable = false;
                     switch (asset)
                     {
@@ -392,6 +392,8 @@ namespace AssetStudioGUI
                             exportPath = savePath;
                             break;
                     }
+                    exportPath += Path.DirectorySeparatorChar;
+                    exportPath += asset.Asset.assetsFile.fileName;
                     exportPath += Path.DirectorySeparatorChar;
                     StatusStripUpdate($"Exporting {asset.TypeString}: {asset.Text}");
                     try
