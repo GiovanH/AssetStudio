@@ -154,7 +154,7 @@ namespace AssetStudioGUI
                 {
                     fileName = assetsFile.fileName;
                 }
-                else if (id > 0)
+                else if (id > 0 && id - 1 < assetsFile.m_Externals.Count)
                 {
                     fileName = assetsFile.m_Externals[id - 1].fileName;
                 }
