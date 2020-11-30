@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -123,9 +125,57 @@ namespace AssetStudioGUI
                 var nodes = Studio.MonoBehaviourToTypeTreeNodes(m_MonoBehaviour);
                 type = m_MonoBehaviour.ToType(nodes);
             }
+            ConvertFileID(type, m_MonoBehaviour.reader.assetsFile);
             var str = JsonConvert.SerializeObject(type, Formatting.Indented);
             File.WriteAllText(exportFullPath, str);
             return true;
+        }
+
+        private static void ConvertFileID(OrderedDictionary type, SerializedFile assetsFile)
+        {
+            IDictionaryEnumerator e = type.GetEnumerator();
+            while (e.MoveNext())
+            {
+                switch (e.Value)
+                {
+                    case List<object> list:
+                        ConvertFileID(list, assetsFile);
+                        break;
+                    case OrderedDictionary dict:
+                        ConvertFileID(dict, assetsFile);
+                        break;
+                }
+            }
+            if (type.Contains("m_FileID"))
+            {
+                var id = (int)type["m_FileID"];
+                var fileName = "";
+                if (id == 0)
+                {
+                    fileName = assetsFile.fileName;
+                }
+                else if (id > 0)
+                {
+                    fileName = assetsFile.m_Externals[id - 1].fileName;
+                }
+                type.Add("m_FileName", fileName);
+            }
+        }
+
+        private static void ConvertFileID(List<object> type, SerializedFile assertsFile)
+        {
+            for (int i = 0; i < type.Count; ++i)
+            {
+                switch (type[i])
+                {
+                    case List<object> list:
+                        ConvertFileID(list, assertsFile);
+                        break;
+                    case OrderedDictionary dict:
+                        ConvertFileID(dict, assertsFile);
+                        break;
+                }
+            }
         }
 
         public static bool ExportFont(AssetItem item, string exportPath)

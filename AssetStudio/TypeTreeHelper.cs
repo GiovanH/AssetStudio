@@ -283,25 +283,6 @@ namespace AssetStudio
                                 var classmember = @class[j];
                                 var name = classmember.m_Name;
                                 obj[name] = ReadValue(@class, reader, ref j);
-                                if (name == "m_FileID")
-                                {
-                                    int m_FileID = (int)obj[name];
-                                    var assetsFile = ((ObjectReader)reader).assetsFile;
-                                    var assetsManager = assetsFile.assetsManager;
-                                    var assetsFileList = assetsManager.assetsFileList;
-                                    var assetsFileIndexCache = assetsManager.assetsFileIndexCache;
-
-                                    if (m_FileID == 0)
-                                    {
-                                        obj["m_FileName"] = assetsFile.fileName;
-                                    }
-                                    else if (m_FileID > 0 && m_FileID - 1 < assetsFile.m_Externals.Count)
-                                    {
-                                        var m_External = assetsFile.m_Externals[m_FileID - 1];
-                                        obj["m_FileName"] = m_External.fileName;
-                                    }
-
-                                }
                             }
                             value = obj;
                             break;
