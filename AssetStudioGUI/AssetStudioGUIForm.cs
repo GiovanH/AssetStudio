@@ -937,6 +937,7 @@ namespace AssetStudioGUI
                 var nodes = MonoBehaviourToTypeTreeNodes(m_MonoBehaviour);
                 obj = m_MonoBehaviour.ToType(nodes);
             }
+            Exporter.ConvertFileID(obj, m_MonoBehaviour.assetsFile);
             var str = JsonConvert.SerializeObject(obj, Formatting.Indented);
             PreviewText(str);
         }

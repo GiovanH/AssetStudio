@@ -131,7 +131,7 @@ namespace AssetStudioGUI
             return true;
         }
 
-        private static void ConvertFileID(OrderedDictionary type, SerializedFile assetsFile)
+        public static void ConvertFileID(OrderedDictionary type, SerializedFile assetsFile)
         {
             IDictionaryEnumerator e = type.GetEnumerator();
             while (e.MoveNext())
