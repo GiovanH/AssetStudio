@@ -301,12 +301,12 @@ namespace AssetStudioGUI
         private static bool TryExportFile(string dir, AssetItem item, string extension, out string fullPath)
         {
             var fileName = FixFileName(item.Text);
-            fullPath = Path.Combine(dir, fileName + extension);
-            if (!File.Exists(fullPath))
-            {
-                Directory.CreateDirectory(dir);
-                return true;
-            }
+            // fullPath = Path.Combine(dir, fileName + extension);
+            // if (!File.Exists(fullPath))
+            // {
+            // Directory.CreateDirectory(dir);
+            // return true;
+            // }
             fullPath = Path.Combine(dir, fileName + item.UniqueID + extension);
             if (!File.Exists(fullPath))
             {
