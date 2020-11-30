@@ -6,7 +6,6 @@ namespace AssetStudio
     {
         public int m_FileID;
         public long m_PathID;
-        public string m_FileName;
 
         private SerializedFile assetsFile;
         private int index = -2; //-2 - Prepare, -1 - Missing
@@ -16,7 +15,6 @@ namespace AssetStudio
             m_FileID = reader.ReadInt32();
             m_PathID = reader.m_Version < 14 ? reader.ReadInt32() : reader.ReadInt64();
             assetsFile = reader.assetsFile;
-            m_FileName = assetsFile.fileName;
         }
 
         private bool TryGetAssetsFile(out SerializedFile result)
@@ -94,7 +92,6 @@ namespace AssetStudio
         public void Set(T m_Object)
         {
             var name = m_Object.assetsFile.fileName;
-            m_FileName = name;
             if (string.Equals(assetsFile.fileName, name, StringComparison.OrdinalIgnoreCase))
             {
                 m_FileID = 0;
