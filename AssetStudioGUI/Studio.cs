@@ -135,7 +135,7 @@ namespace AssetStudioGUI
                 {
                     var assetItem = new AssetItem(asset);
                     objectAssetItemDic.Add(asset, assetItem);
-                    assetItem.UniqueID = " #" + asset.assetsFile.fileName + "." + asset.m_PathID;
+                    assetItem.UniqueID = " #" + asset.m_PathID;
                     var exportable = false;
                     switch (asset)
                     {
@@ -370,15 +370,16 @@ namespace AssetStudioGUI
                 foreach (var asset in toExportAssets)
                 {
                     string exportPath;
+                    string assetParentFile = asset.Asset.assetsFile.fileName;
                     switch (Properties.Settings.Default.assetGroupOption)
                     {
                         case 0: //type name
-                            exportPath = Path.Combine(savePath, asset.TypeString);
+                            exportPath = Path.Combine(savePath, assetParentFile, asset.TypeString);
                             break;
                         case 1: //container path
                             if (!string.IsNullOrEmpty(asset.Container))
                             {
-                                exportPath = Path.Combine(savePath, Path.GetDirectoryName(asset.Container));
+                                exportPath = Path.Combine(savePath, assetParentFile, Path.GetDirectoryName(asset.Container));
                             }
                             else
                             {
@@ -386,10 +387,10 @@ namespace AssetStudioGUI
                             }
                             break;
                         case 2: //source file
-                            exportPath = Path.Combine(savePath, asset.SourceFile.fullName + "_export");
+                            exportPath = Path.Combine(savePath, assetParentFile, asset.SourceFile.fullName + "_export");
                             break;
                         default:
-                            exportPath = savePath;
+                            exportPath = Path.Combine(savePath, assetParentFile);
                             break;
                     }
                     exportPath += Path.DirectorySeparatorChar;
