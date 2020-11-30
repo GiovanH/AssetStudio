@@ -24,7 +24,6 @@ namespace AssetStudio
         {
             nodes.Add(new TypeTreeNode($"PPtr<{type}>", name, indent, false));
             nodes.Add(new TypeTreeNode("int", "m_FileID", indent + 1, false));
-            // nodes.Add(new TypeTreeNode("string", "m_FileName", indent + 1, false));
             if (version[0] >= 5) //5.0 and up
             {
                 nodes.Add(new TypeTreeNode("SInt64", "m_PathID", indent + 1, false));
@@ -33,6 +32,7 @@ namespace AssetStudio
             {
                 nodes.Add(new TypeTreeNode("int", "m_PathID", indent + 1, false));
             }
+            // AddString(nodes, "m_FileName", indent + 1);
         }
 
         public void AddString(List<TypeTreeNode> nodes, string name, int indent)
