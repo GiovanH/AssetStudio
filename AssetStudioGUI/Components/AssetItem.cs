@@ -20,6 +20,7 @@ namespace AssetStudioGUI
         {
             Asset = asset;
             SourceFile = asset.assetsFile;
+            Container = asset.assetsFile.fileName;
             Type = asset.type;
             TypeString = Type.ToString();
             m_PathID = asset.m_PathID;
