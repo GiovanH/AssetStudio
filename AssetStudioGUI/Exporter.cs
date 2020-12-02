@@ -148,11 +148,17 @@ namespace AssetStudioGUI
             }
             if (type.Contains("m_FileID"))
             {
-                var id = (int)type["m_FileID"];
+                int id = (int)type["m_FileID"];
                 var fileName = "";
                 if (id == 0)
                 {
-                    fileName = assetsFile.fileName;
+                    long path_id = (long)type["m_PathID"];
+                    if (path_id == 0)
+                    {
+                        fileName = null;
+                    } else {
+                        fileName = assetsFile.fileName;
+                    }
                 }
                 else if (id > 0 && id - 1 < assetsFile.m_Externals.Count)
                 {
